@@ -1,0 +1,19 @@
+
+<h1>Book List</h1>
+<!--<div><h3 [textContent]="book.name"></h3></div>
+<div>{{book.name}}</div>-->
+<div [class]="getClassBinding(1)">
+    <h1>First book is: {{ model.getBookId(1).name }}</h1>
+</div>
+<div [class]="getClassBinding(2)">
+    <h1>Second book is: {{ model.getBookId(2).name }}</h1>
+</div>
+
+<button class="btn btn-success" [class.disabled]="disabled">Submit</button>
+
+<div class="m-3" [ngClass]="getClassObject(1)">
+    <h1>First book is: {{ model.getBookId(1).name }}</h1>
+</div>
+<div class="m-3" [ngClass]="getClassObject(2)">
+    <h1>First book is: {{ model.getBookId(2).name }}</h1>
+</div>
