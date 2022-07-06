@@ -28,4 +28,26 @@ export class BookComponent {
 
         }
     }
+
+    color:string = "yellow";
+
+    getStyleBinding(id:number): object{
+        let book = this.model.getBookId(id);
+        return {
+            fontSize: "40px",
+            color: "yellow"
+        };
+    }
+
+    onClick(even:Event) {
+        console.log(event);
+        console.log("button was clicked")
+    }
+
+    name="john";
+    description ="this is random text for testing purposes";
+
+    onKeyUp() {
+        console.log(this.name); //13 is the keycode for the enter key 
+    }
 }
