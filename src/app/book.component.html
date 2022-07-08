@@ -1,7 +1,7 @@
-
+<!-- 
 <h1>Book List</h1>
-<!--<div><h3 [textContent]="book.name"></h3></div>
-<div>{{book.name}}</div>-->
+<div><h3 [textContent]="book.name"></h3></div>
+<div>{{book.name}}</div>
 <div [class]="getClassBinding(1)">
     <h1>First book is: {{ model.getBookId(1).name }}</h1>
 </div>
@@ -22,4 +22,40 @@
 
 <input [(ngModel)]="name" (keyup.enter)="onKeyUp()"/>
 
-{{ description | custompipe }}
+{{ description | custompipe }} -->
+<!--
+<div *ngIf="model.getBooks().length>0">There are {{ model.getBooks().length }} books in the list</div>
+
+
+<div *ngIf="model.getBooks().length==0">There are no books in the list</div>
+
+<div [ngSwitch]="model.getBooks().length">
+    <span *ngSwitch="0">There is 1 book</span>
+    <span *ngSwitch="1">There are no books</span>
+    <span *ngSwitchDefault>There are many books</span>
+</div>
+
+<div [ngSwitch]="model.getBookId(1).name">
+    <span *ngSwitchCase="'War and Peace'">Book name is War and Peace</span>
+    <span *ngSwitchCase="'My Childhood'">Book name is My Childhood</span>
+    <span *ngSwitchDefault>Book name is Sweaters</span>
+</div>
+ngFor
+
+<ul>
+    <li *ngFor="let book of model.getBooks(); index as i; first as f">
+        {{i+1}}- {{book.name}} - {{book.price}}
+        <span *ngIf="f">is first item </span>
+    </li>
+</ul>-->
+
+<div>
+    <button class="btn btn-success" (click)="addBook()">Add Book</button>
+
+    <ul>
+        <li *ngFor="let book of model.getBooks(); index as i; first as f">
+            {{book.name}}
+            <button class="btn btn-danger" (click)="deleteBook(book)">Delete Book</button>
+        </li>
+    </ul>
+</div>
