@@ -18,6 +18,10 @@ export class BookComponent {
     deleteBook(book:Book) {
         this.model.deleteBook(book);
     }
+
+    updateBook(book:Book) {
+        book.name="updated";
+    }
 }
 // export class BookComponent {
 //     model: BookRepository = new BookRepository();

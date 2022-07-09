@@ -47,7 +47,7 @@ ngFor
         {{i+1}}- {{book.name}} - {{book.price}}
         <span *ngIf="f">is first item </span>
     </li>
-</ul>-->
+</ul>
 
 <div>
     <button class="btn btn-success" (click)="addBook()">Add Book</button>
@@ -56,6 +56,29 @@ ngFor
         <li *ngFor="let book of model.getBooks(); index as i; first as f">
             {{book.name}}
             <button class="btn btn-danger" (click)="deleteBook(book)">Delete Book</button>
+            <button class="btn btn-primary" (click)="updateBook(book)">Update</button>
         </li>
     </ul>
 </div>
+ng template-->
+<!--
+<ng-template #bookList let-books="booksList">
+    <div>
+        <div>
+            <ul>
+                <li *ngFor="let book of books">
+                    {{book.name}}
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template [ngTemplateOutlet]="bookList" [ngTemplateOutletContext]="{books:model.getBooks()}"></ng-template>
+-->
+<!--<ng-template [ngTemplateOutlet]="bookList" [ngTemplateOutletContext]="{books:model.getBestSellerBooks()}"></ng-template>example for templates use-->
+
+<!-- custom directive -->
+
+<input type="text" appForEmail/>
