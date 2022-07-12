@@ -89,27 +89,42 @@ ng template-->
     <div class="row">
         <div class="col-10">
             <div class="m-4">
-                <div class="bg-primary text-white m-3 p-3">
-                    {{jsonBook}}
-                </div>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input required minlength="3" [(ngModel)]="newBook.name" type="text" name="bName" #name="ngModel" class="form-control" />
-                    <div class="alert alert-danger" *ngIf="!name.valid && name.touched">name is required. Please fill in</div>
-                    <!--<p *ngIf="name.errors?.['required']">Name is required. Please fill in</p>-->
-                    <p *ngIf="name.errors?.['minlength']">Minimum 3 characters required</p>
-                </div>
-                <div class="form-group">
-                    <label>Writer</label>
-                    <input required [(ngModel)]="newBook.writer" type="text" name="bWriter" #writer="ngModel" class="form-control" />
-                    <div class="alert alert-danger" *ngIf="!writer.valid && writer.touched">writer is required. Please fill in</div>
-                </div>
-                <div class="form-group">
-                    <label>Price</label>
-                    <input required [(ngModel)]="newBook.price" type="text" name="bPrice" #price="ngModel" class="form-control" />
-                    <div class="alert alert-danger" *ngIf="!price.valid && price.touched">price is required. Please fill in</div>
-                </div>
-                <button (click)="addBook(newBook)" class="btn btn-primary">Submit</button>
+                <form #form="ngForm" (ngSubmit)="submitForm(form)">
+                    <div class="bg-danger text-white" *ngIf="formSubmit && form.invalid">
+                        There is a problem
+                    </div>
+                    <div class="bg-primary text-white m-3 p-3">
+                        {{jsonBook}}
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input required minlength="3" [(ngModel)]="newBook.name" type="text" name="name" #name="ngModel" class="form-control" />
+                        <div class="alert alert-danger" *ngIf="(formSubmit || name.dirty) && name.isValid()">
+                            <p *ngFor="let error of getValidationErrors(name)">
+                                {{error}}
+                            </p>
+                            <!--<p *ngIf="name.errors?.['required']">Name is required. Please fill in</p>
+                            <p *ngIf="name.errors?.['minlength']">Minimum 3 characters required</p>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Writer</label>
+                        <input required maxlength="10" [(ngModel)]="newBook.writer" type="text" name="bWriter" #writer="ngModel" class="form-control" />
+                        <div class="alert alert-danger" *ngIf="!writer.valid && writer.touched">
+                            <p *ngIf="writer.errors?.['required']">Writer is required</p>
+                            <p *ngIf="writer.errors?.['maxlength']">Max length is 10 characters</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input required pattern="[0-9]+" [(ngModel)]="newBook.price" type="text" name="bPrice" #price="ngModel" class="form-control" />
+                        <div class="alert alert-danger" *ngIf="!price.valid && price.touched">
+                            <p *ngIf="price.errors?.['required']">price is required. Please fill in</p>
+                            <p *ngIf="price.errors?.['pattern']">numbers only</p>
+                        </div>
+                    </div>
+                    <button (click)="addBook(newBook)" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { BookRepository } from "./repository.model";
 import { Book } from "./book.model";
+import { NgForm } from "@angular/forms";
 
 @Component ({
     selector: "app-book",
@@ -20,7 +21,37 @@ export class BookComponent {
         console.log("New Book is"+this.jsonBook);
     }
 
+    getValidationErrors(model:any) {
+        let ctrlName:string = model.name;
+        let messages:string[] = [];
 
+        if(model.errors) {
+            for(let errorName in model.errors) {
+                switch(errorName) {
+                    case "required":
+                        messages.push(`You must enter a ${ctrlName}`);
+                        break;
+                    case "minlength":
+                        messages.push('You must enter min 3 characters');
+                        break;    
+                }
+            }
+        }
+        return messages;
+    }
+
+    formSubmit:boolean = false;
+
+    submitForm(form:any) {
+        //console.log(form);
+        this.formSubmit=true;
+        if(form.valid){
+            this.addBook(this.newBook);
+            this.newBook = new Book;
+            form.reset();
+            this.formSubmit=false;
+        }
+    }
 //     bookName:string = this.model.getBookId(1).name!;
 //     addBook () {
 //         this.model.addBook(new Book(4, 'Anna Karanira', 'Tolstoy', 20))
