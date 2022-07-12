@@ -10,19 +10,30 @@ import { Book } from "./book.model";
 
 export class BookComponent {
     model:BookRepository = new BookRepository();
-    bookName:string = this.model.getBookId(1).name!;
-    addBook () {
-        this.model.addBook(new Book(4, 'Anna Karanira', 'Tolstoy', 20))
+
+    newBook:Book = new Book();
+    get jsonBook() {
+        return JSON.stringify(this.newBook);
     }
 
-    deleteBook(book:Book) {
-        this.model.deleteBook(book);
+    addBook(b:Book) {
+        console.log("New Book is"+this.jsonBook);
     }
 
-    updateBook(book:Book) {
-        book.name="updated";
-    }
-}
+
+//     bookName:string = this.model.getBookId(1).name!;
+//     addBook () {
+//         this.model.addBook(new Book(4, 'Anna Karanira', 'Tolstoy', 20))
+//     }
+
+//     deleteBook(book:Book) {
+//         this.model.deleteBook(book);
+//     }
+
+//     updateBook(book:Book) {
+//         book.name="updated";
+//     }
+// }
 // export class BookComponent {
 //     model: BookRepository = new BookRepository();
 //     book: Book = this.model.getBookId(1);
@@ -65,4 +76,4 @@ export class BookComponent {
 //     onKeyUp() {
 //         console.log(this.name); //13 is the keycode for the enter key 
 //     }
-//}
+}
