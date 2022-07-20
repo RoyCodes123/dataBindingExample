@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
 import { BookRepository } from "./repository.model";
 import { Book } from "./book.model";
-import { NgForm } from "@angular/forms";
+import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { isThisTypeNode } from "typescript";
 
 @Component ({
     selector: "app-book",
@@ -9,7 +10,39 @@ import { NgForm } from "@angular/forms";
     styleUrls: ["book.component.css"]
 })
 
+//Reactive form
 export class BookComponent {
+    bookForm = new FormGroup({
+        /*name:new FormControl('sweaters'),
+        writer:new  FormControl('guykoma'),
+        price:new FormControl('224')*/ 
+        name:new FormControl('',[Validators.required,Validators.minLength(3)]),
+        writer:new  FormControl('',Validators.required),
+        price:new FormControl('',Validators.required)  
+    });
+    
+    onSubmit() {
+        console.log(this.bookForm.value);
+    }
+
+    updateBook() {
+        this.bookForm.patchValue({
+            name:"notsweaters",
+            writer:"notgkoma",
+            price:"420"
+        })
+    }
+
+    get name() {
+        return this.bookForm.get('name');
+    }
+
+   // updateName() {
+     //   this.name.setValue("my childhood");
+    //}
+}
+
+/*export class BookComponent {
     model:BookRepository = new BookRepository();
 
     newBook:Book = new Book();
@@ -21,8 +54,20 @@ export class BookComponent {
         console.log("New Book is"+this.jsonBook);
     }
 
-    getValidationErrors(model:any) {
-        let ctrlName:string = model.name;
+    getFormValidationErrors(form:NgForm):string[] {
+        let messages: string[] = [];
+        Object.keys(form.controls).forEach(x=>{
+            console.log(x);
+            console.log(form.controls[x]);
+
+            this.getValidationErrors(form.controls[x],x)
+            .forEach(message => messages.push(message));
+        })
+        return messages;
+    }
+
+    getValidationErrors(model:any, key?:string) {
+        let ctrlName:string = model.name || key;
         let messages:string[] = [];
 
         if(model.errors) {
@@ -43,7 +88,7 @@ export class BookComponent {
     formSubmit:boolean = false;
 
     submitForm(form:NgForm) {
-        //console.log(form);
+        console.log(form);
         this.formSubmit=true;
         if(form.valid){
             this.addBook(this.newBook);
@@ -51,7 +96,7 @@ export class BookComponent {
             form.reset();
             this.formSubmit=false;
         }
-    }
+    }*/
 //     bookName:string = this.model.getBookId(1).name!;
 //     addBook () {
 //         this.model.addBook(new Book(4, 'Anna Karanira', 'Tolstoy', 20))
@@ -107,4 +152,4 @@ export class BookComponent {
 //     onKeyUp() {
 //         console.log(this.name); //13 is the keycode for the enter key 
 //     }
-}
+//}

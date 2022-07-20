@@ -84,7 +84,7 @@ ng template-->
 <!--<input type="text" appForEmail/>-->
 
 <!--Forms-->
-
+<!--
 <div class="container">
     <div class="row">
         <div class="col-10">
@@ -92,6 +92,11 @@ ng template-->
                 <form #form="ngForm" (ngSubmit)="submitForm(form)">
                     <div class="bg-danger text-white" *ngIf="formSubmit && form.invalid">
                         There is a problem
+                        <ul>
+                            <li *ngFor="let error of getFormValidationErrors(form)">
+                                {{error}}
+                            </li>
+                        </ul>
                     </div>
                     <div class="bg-primary text-white m-3 p-3">
                         {{jsonBook}}
@@ -103,8 +108,8 @@ ng template-->
                             <p *ngFor="let error of getValidationErrors(name)">
                                 {{error}}
                             </p>
-                            <!--<p *ngIf="name.errors?.['required']">Name is required. Please fill in</p>
-                            <p *ngIf="name.errors?.['minlength']">Minimum 3 characters required</p>-->
+                            //<p *ngIf="name.errors?.['required']">Name is required. Please fill in</p>
+                            //<p *ngIf="name.errors?.['minlength']">Minimum 3 characters required</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -123,9 +128,43 @@ ng template-->
                             <p *ngIf="price.errors?.['pattern']">numbers only</p>
                         </div>
                     </div>
-                    <button (click)="addBook(newBook)" class="btn btn-primary">Submit</button>
+                    <button (click)="addBook(newBook)" class="btn btn-primary" type="submit" [disabled]="formSubmit && form.invalid">Submit</button>
                 </form>
             </div>
         </div>
     </div>
+</div>-->
+
+<!--Reactive forms-->
+<div class="m-4">
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" formControlName="name">
+            <!--<input class="form-control" [formControl]="name">-->
+            <div class="alert alert-danger" 
+            *ngIf="name!.touched
+             && name!.invalid">
+             <ul>
+                <li *ngIf="name?.errors?.['required']">
+                    Name is required.
+                </li>
+                <li *ngIf="name?.errors?.['minlength']">
+                    Min 3 characters.
+                </li>
+             </ul></div>
+        </div>
+        <div class="form-group">
+            <label>Writer</label>
+            <input class="form-control" formControlName="writer">
+            <!--<input class="form-control" [formControl]="writer">-->
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input class="form-control" formControlName="price">
+            <!--<input class="form-control" [formControl]="price">-->
+        </div>
+        <!--<button type="submit" (click)="updateName()"> Submit </button>-->
+        <button type="submit" class="btn btn-primary" (click)="updateBook()"> Submit </button>
+    </form>
 </div>
