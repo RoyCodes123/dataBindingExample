@@ -42,7 +42,7 @@ export class BookComponent {
 
     formSubmit:boolean = false;
 
-    submitForm(form:any) {
+    submitForm(form:NgForm) {
         //console.log(form);
         this.formSubmit=true;
         if(form.valid){

@@ -99,7 +99,7 @@ ng template-->
                     <div class="form-group">
                         <label>Name</label>
                         <input required minlength="3" [(ngModel)]="newBook.name" type="text" name="name" #name="ngModel" class="form-control" />
-                        <div class="alert alert-danger" *ngIf="(formSubmit || name.dirty) && name.isValid()">
+                        <div class="alert alert-danger" *ngIf="(formSubmit || name.touched) && !name.valid">
                             <p *ngFor="let error of getValidationErrors(name)">
                                 {{error}}
                             </p>
